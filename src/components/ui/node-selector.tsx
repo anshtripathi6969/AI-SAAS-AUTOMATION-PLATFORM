@@ -19,7 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { NodeType } from "@/generated/prisma";
+import { NodeType } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";

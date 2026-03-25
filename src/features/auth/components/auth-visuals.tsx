@@ -59,24 +59,6 @@ export function AuthVisuals() {
       <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-600/10 blur-[140px]" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-600/10 blur-[120px]" />
 
-      {/* LOGO + BRANDING (Above the card) */}
-      <div className="absolute top-[10%] left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex items-center gap-3 group"
-        >
-          <div className="relative">
-            <div className="absolute inset-x-0 bottom-0 h-4 bg-indigo-500/20 blur-lg rounded-full opacity-100" />
-            <Globe className="w-10 h-10 text-indigo-500 relative z-10" />
-          </div>
-          <span className="text-2xl font-black tracking-tighter text-white">
-            Fluxion <span className="text-indigo-400">AI</span>
-          </span>
-        </motion.div>
-      </div>
-
       {/* Floating Constellation (Auth-Specific) */}
       <div className="absolute inset-0 pointer-events-none z-10 hidden md:block">
         {floatingNodes.map((node, i) => (

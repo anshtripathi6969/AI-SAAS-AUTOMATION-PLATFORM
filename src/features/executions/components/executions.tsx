@@ -13,8 +13,8 @@ import {
 } from "@/components/entity-components";
 import { useSuspenseExecutions } from "../hooks/use-executions"
 import { useExecutionsParams } from "../hooks/use-executions-params";
-import type { Execution } from "@/generated/prisma";
-import { ExecutionStatus } from "@/generated/prisma";
+import type { Execution } from "@prisma/client";
+import { ExecutionStatus } from "@prisma/client";
 import { CheckCircle2Icon, ClockIcon, Loader2Icon, XCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";

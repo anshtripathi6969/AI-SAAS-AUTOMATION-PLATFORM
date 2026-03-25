@@ -2,7 +2,7 @@ import { NonRetriableError } from "inngest";
 import { inngest } from "./client";
 import prisma from "@/lib/db";
 import { topologicalSort } from "./utils";
-import { ExecutionStatus, NodeType } from "@/generated/prisma";
+import { ExecutionStatus, NodeType } from "@prisma/client";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
 import { httpRequestChannel } from "./channels/http-request";
 import { manualTriggerChannel } from "./channels/manual-trigger";
@@ -15,7 +15,7 @@ import { slackChannel } from "./channels/slack";
 export const executeWorkflow = inngest.createFunction(
   {
     id: "execute-workflow",
-    retries: 0, // TODO: REMOVE IN PRODUCTION
+    retries: process.env.NODE_ENV === "production" ? 3 : 0,
     onFailure: async ({ event, step }) => {
       return prisma.execution.update({
         where: { inngestEventId: event.data.event.id },
@@ -88,7 +88,7 @@ export const executeWorkflow = inngest.createFunction(
       context = await executor({
         data: node.data as Record<string, unknown>,
         nodeId: node.id,
-        userId,
+        userId: userId as string,
         context,
         step,
         publish,

@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { motion } from "framer-motion";
+import { Globe } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,20 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
+  
+  const signInGithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: "/workflows",
+    }, {
+      onSuccess: () => {
+        router.push("/workflows");
+      },
+      onError: (ctx) => {
+        toast.error(ctx.error.message || "Something went wrong");
+      },
+    });
+  };
 
   const isPending = form.formState.isSubmitting;
   const emailValue = form.watch("email");
@@ -83,9 +98,25 @@ export function LoginForm() {
       >
         {/* Glow effect matching the landing page cards */}
         <div className="absolute inset-0 rounded-[2rem] bg-indigo-500/10 blur-3xl -z-10" />
-        
+
         <Card className="border-white/5 bg-[#0a0a0c]/40 backdrop-blur-[40px] shadow-2xl rounded-[2rem] overflow-hidden">
           <CardHeader className="text-center pb-2 pt-10">
+            {/* BRAND LOGO SLOTS IN HERE */}
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex items-center justify-center gap-2 mb-4 group"
+            >
+              <div className="relative">
+                <Globe className="w-6 h-6 text-indigo-500 relative z-10" />
+                <div className="absolute inset-x-0 bottom-0 h-2 bg-indigo-500/20 blur-md rounded-full" />
+              </div>
+              <span className="text-lg font-black tracking-tighter text-white">
+                Fluxion <span className="text-indigo-400">AI</span>
+              </span>
+            </motion.div>
+
             <CardTitle className="text-3xl font-black text-white tracking-tight">
               Welcome back
             </CardTitle>
@@ -95,34 +126,35 @@ export function LoginForm() {
           </CardHeader>
 
           <CardContent className="pt-6 pb-10">
-            {/* OAUTH */}
-            <div className="mb-8 flex flex-col gap-3">
-              {["github", "google"].map((p) => (
-                <motion.div key={p} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    variant="outline"
-                    type="button"
-                    disabled={isPending}
-                    className="flex w-full h-12 items-center justify-center gap-3 border-white/5 bg-white/[0.03] text-white hover:bg-white/[0.08] hover:border-white/10 transition-all rounded-xl font-semibold"
-                  >
-                    <Image
-                      alt={p}
-                      src={`/logos/${p}.svg`}
-                      width={20}
-                      height={20}
-                    />
-                    <span>Continue with {p.charAt(0).toUpperCase() + p.slice(1)}</span>
-                  </Button>
-                </motion.div>
-              ))}
+            {/* OAUTH SECTION */}
+            <div className="mb-8">
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  onClick={signInGithub}
+                  variant="outline"
+                  type="button"
+                  disabled={isPending}
+                  className="flex w-full h-12 items-center justify-center gap-3 border-white/5 bg-white/[0.03] text-white hover:bg-white/[0.08] hover:border-white/10 transition-all rounded-xl font-semibold shadow-lg group relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Image
+                    alt="Github"
+                    src="/logos/github.svg"
+                    width={20}
+                    height={20}
+                    className="brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity"
+                  />
+                  <span className="relative z-10">Continue with Github</span>
+                </Button>
+              </motion.div>
             </div>
 
             <div className="relative mb-8">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-white/5" />
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-[#0a0a0c]/0 px-2 text-slate-500 font-bold tracking-widest backdrop-blur-md">Or continue with</span>
+              <div className="relative flex justify-center text-[11px] uppercase tracking-widest font-bold text-slate-500">
+                <span className="bg-[#0a0a0c]/0 px-3 backdrop-blur-md">Or continue with</span>
               </div>
             </div>
 

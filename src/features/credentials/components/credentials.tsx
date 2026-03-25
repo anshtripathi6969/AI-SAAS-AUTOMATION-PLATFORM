@@ -15,7 +15,7 @@ import { useRemoveCredential, useSuspenseCredentials } from "../hooks/use-creden
 import { useRouter } from "next/navigation";
 import { useCredentialsParams } from "../hooks/use-credentials-params";
 import { useEntitySearch } from "@/hooks/use-entity-search";
-import { CredentialType } from "@/generated/prisma";
+import { CredentialType } from "@prisma/client";
 import Image from "next/image";
 import { MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
