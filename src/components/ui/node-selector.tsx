@@ -179,7 +179,7 @@ export function NodeSelector({
               Add a New Step
             </SheetTitle>
             <SheetDescription className="text-sm text-slate-400/80 mt-2">
-              Select a trigger or action to add to your automated workflow. Search 100+ integrations or custom tools.
+              Select a trigger or action to add to your automated workflow. Search integrations or custom tools.
             </SheetDescription>
           </SheetHeader>
 
